@@ -1,6 +1,6 @@
 package repository.impl;
 
-import data.model.Expense;
+import data.entity.ExpenseEntity;
 import repository.DatabaseRepository;
 
 /**
@@ -27,12 +27,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
     }
 
     @Override
-    public boolean addExpense(Expense expense) {
+    public boolean addExpense(ExpenseEntity expense) {
         return false;
     }
 
     @Override
-    public boolean removeExpense(Expense expense) {
+    public boolean removeExpense(ExpenseEntity expense) {
         return false;
     }
 }

@@ -1,7 +1,6 @@
 package repository;
 
 import data.entity.ExpenseEntity;
-import data.model.Expense;
 import repository.impl.DatabaseRepositoryImpl;
 
 import java.util.ArrayList;
@@ -17,9 +16,9 @@ public interface DatabaseRepository {
 
     boolean closeConnection();
 
-    boolean addExpense(Expense expense);
+    boolean addExpense(ExpenseEntity expense);
 
-    boolean removeExpense(Expense expense);
+    boolean removeExpense(ExpenseEntity expense);
 
     static DatabaseRepository getInstance() {
         return DatabaseRepositoryImpl.getInstance();
