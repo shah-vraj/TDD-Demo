@@ -4,6 +4,7 @@ import data.model.Expense;
 import repository.DatabaseRepository;
 import repository.ViewExpensesRepository;
 
+import java.time.Month;
 import java.util.List;
 
 /**
@@ -24,17 +25,17 @@ public class ViewExpensesRepositoryImpl implements ViewExpensesRepository {
     }
 
     @Override
-    public List<Expense> getExpensesForMonth(String month) {
+    public List<Expense> getExpensesForMonth(Month month, int year) {
         return List.of();
     }
 
     @Override
-    public List<Expense> getTotalExpenseCostForCurrentMonth() {
-        return List.of();
+    public double getTotalExpenseCostForCurrentMonth() {
+        return 0.0;
     }
 
     @Override
-    public List<Expense> getTotalExpenseCostForMonth(String month) {
-        return List.of();
+    public double getTotalExpenseCostForMonth(Month month, int year) {
+        return 0.0;
     }
 }

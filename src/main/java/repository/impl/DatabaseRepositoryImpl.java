@@ -3,6 +3,8 @@ package repository.impl;
 import data.entity.ExpenseEntity;
 import repository.DatabaseRepository;
 
+import java.util.List;
+
 /**
  * Concrete implementation class for DatabaseRepository
  */
@@ -32,7 +34,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
     }
 
     @Override
-    public boolean removeExpense(ExpenseEntity expense) {
+    public boolean removeExpense(int id) {
         return false;
+    }
+
+    @Override
+    public List<ExpenseEntity> getAllExpenses() {
+        return List.of();
     }
 }

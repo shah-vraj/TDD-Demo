@@ -1,23 +1,28 @@
 package repository.impl;
 
 import data.model.Expense;
-import repository.AddExpenseRepository;
 import repository.DatabaseRepository;
+import repository.ManageExpenseRepository;
 
 /**
- * Concrete implementation class for AddExpenseRepository
+ * Concrete implementation class for ManageExpenseRepository
  */
-public class AddExpenseRepositoryImpl implements AddExpenseRepository {
+public class ManageExpenseRepositoryImpl implements ManageExpenseRepository {
 
     private final DatabaseRepository databaseRepository;
 
-    public AddExpenseRepositoryImpl(DatabaseRepository databaseRepository) {
+    public ManageExpenseRepositoryImpl(DatabaseRepository databaseRepository) {
         this.databaseRepository = databaseRepository;
         databaseRepository.openConnection();
     }
 
     @Override
     public boolean addExpense(Expense expense) {
+        return false;
+    }
+
+    @Override
+    public boolean removeExpense(Expense expense) {
         return false;
     }
 }

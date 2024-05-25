@@ -18,7 +18,9 @@ public interface DatabaseRepository {
 
     boolean addExpense(ExpenseEntity expense);
 
-    boolean removeExpense(ExpenseEntity expense);
+    boolean removeExpense(int id);
+
+    List<ExpenseEntity> getAllExpenses();
 
     static DatabaseRepository getInstance() {
         return DatabaseRepositoryImpl.getInstance();

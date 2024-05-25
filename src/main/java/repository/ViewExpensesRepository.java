@@ -2,6 +2,7 @@ package repository;
 
 import data.model.Expense;
 
+import java.time.Month;
 import java.util.List;
 
 /**
@@ -10,9 +11,9 @@ import java.util.List;
 public interface ViewExpensesRepository {
     List<Expense> getCurrentMonthExpenses();
 
-    List<Expense> getExpensesForMonth(String month);
+    List<Expense> getExpensesForMonth(Month month, int year);
 
-    List<Expense> getTotalExpenseCostForCurrentMonth();
+    double getTotalExpenseCostForCurrentMonth();
 
-    List<Expense> getTotalExpenseCostForMonth(String month);
+    double getTotalExpenseCostForMonth(Month month, int year);
 }
