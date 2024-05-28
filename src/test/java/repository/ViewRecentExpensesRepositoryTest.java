@@ -65,7 +65,7 @@ class ViewRecentExpensesRepositoryTest {
     public void shouldReturnProperExpensesWhenLimitAndOffsetAreInRangeOfAllExpenses() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(
-                dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3, dummyExpenseEntity4, dummyExpenseEntity5
+                dummyExpenseEntity1, dummyExpenseEntity4, dummyExpenseEntity3, dummyExpenseEntity5, dummyExpenseEntity2
         );
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
 

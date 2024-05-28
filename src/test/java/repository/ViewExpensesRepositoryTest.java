@@ -148,9 +148,10 @@ class ViewExpensesRepositoryTest {
                 dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3, dummyExpenseEntity4
         );
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
+        LocalDate currentLocalDate = LocalDate.now();
 
         // When
-        List<Expense> result = repository.getExpensesForMonth(Month.MAY, 2024);
+        List<Expense> result = repository.getExpensesForMonth(currentLocalDate.getMonth(), currentLocalDate.getYear());
 
         // Then
         assertEquals(result.size(), 3);

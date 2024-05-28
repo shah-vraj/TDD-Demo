@@ -99,6 +99,29 @@ class ManageExpenseRepositoryTest {
     }
 
     @Test
+    public void shouldNotRemoveExpenseWhenInvalidExpenseProvided() {
+        // Given
+        Expense nullNameExpense = new Expense(null, 1.0, LocalDate.now());
+        Expense blankNameExpense = new Expense(" ", 1.0, LocalDate.now());
+        Expense negativeCostExpense = new Expense("Milk", -10.0, LocalDate.now());
+        Expense nullDateExpense = new Expense("Milk", 1.0, null);
+
+        // When
+        boolean isExpenseRemoved1 = repository.removeExpense(nullNameExpense);
+        boolean isExpenseRemoved2 = repository.removeExpense(blankNameExpense);
+        boolean isExpenseRemoved3 = repository.removeExpense(negativeCostExpense);
+        boolean isExpenseRemoved4 = repository.removeExpense(nullDateExpense);
+
+        // Then
+        verify(databaseRepository, never()).addExpense(any());
+
+        assertFalse(isExpenseRemoved1);
+        assertFalse(isExpenseRemoved2);
+        assertFalse(isExpenseRemoved3);
+        assertFalse(isExpenseRemoved4);
+    }
+
+    @Test
     public void shouldAddExpenseWhenValidExpenseProvided() {
         // Given
         Expense expense = new Expense("Milk", 7.23, LocalDate.now());
@@ -123,14 +146,14 @@ class ManageExpenseRepositoryTest {
         Expense expense4 = new Expense("Milk", 6.88, LocalDate.of(2024, Month.APRIL, 14));
         ArgumentCaptor<ExpenseEntity> expenseEntityArgumentCaptor = ArgumentCaptor.forClass(ExpenseEntity.class);
         when(databaseRepository.addExpense(any())).thenReturn(true);
+        when(databaseRepository.getAllExpenses())
+                .thenReturn(List.of(ExpenseHelper.getExpenseEntityFromExpense(expense1, 1)));
 
         // When & Then
         boolean isExpenseAdded = repository.addExpense(expense1);
         verify(databaseRepository).addExpense(expenseEntityArgumentCaptor.capture());
         assertTrue(ExpenseHelper.areTheSame(expenseEntityArgumentCaptor.getValue(), expense1));
         assertTrue(isExpenseAdded);
-        when(databaseRepository.getAllExpenses())
-                .thenReturn(List.of(ExpenseHelper.getExpenseEntityFromExpense(expense1, 1)));
 
         isExpenseAdded = repository.addExpense(expense2);
         verify(databaseRepository, times(2)).addExpense(expenseEntityArgumentCaptor.capture());
