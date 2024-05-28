@@ -3,6 +3,7 @@ package repository.impl;
 import data.entity.ExpenseEntity;
 import repository.DatabaseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,10 +11,20 @@ import java.util.List;
  */
 public class DatabaseRepositoryImpl implements DatabaseRepository {
 
+    private static DatabaseRepositoryImpl instance;
+    private final List<ExpenseEntity> allExpenses = new ArrayList<>();
+
     private DatabaseRepositoryImpl() { }
 
+    /**
+     * Singleton object approach to have single object throughout application
+     *
+     * @return DatabaseRepository instance
+     */
     public static DatabaseRepository getInstance() {
-        return new DatabaseRepositoryImpl();
+        if (instance == null)
+            instance = new DatabaseRepositoryImpl();
+        return instance;
     }
 
     @Override
@@ -30,16 +41,16 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
     @Override
     public boolean addExpense(ExpenseEntity expense) {
-        return false;
+        return allExpenses.add(expense);
     }
 
     @Override
     public boolean removeExpense(int id) {
-        return false;
+        return allExpenses.removeIf(expenseEntity -> expenseEntity.id() == id);
     }
 
     @Override
     public List<ExpenseEntity> getAllExpenses() {
-        return List.of();
+        return allExpenses;
     }
 }

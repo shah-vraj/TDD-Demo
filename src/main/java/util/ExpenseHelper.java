@@ -11,8 +11,9 @@ public class ExpenseHelper {
 
     /**
      * Helper method to get ExpenseEntity instance with the requested id and expense data.
+     *
      * @param expense Expense to take data from
-     * @param id ID of the expense to provide
+     * @param id      ID of the expense to provide
      * @return ExpenseEntity class with Expense data and provided ID
      */
     public static ExpenseEntity getExpenseEntityFromExpense(Expense expense, int id) {
@@ -21,8 +22,9 @@ public class ExpenseHelper {
 
     /**
      * Compares the expense entity with the expense
+     *
      * @param expenseEntity ExpenseEntity class to compare with
-     * @param expense Expense class to compare with
+     * @param expense       Expense class to compare with
      * @return True if both expenses have same value, otherwise False
      */
     public static boolean areTheSame(ExpenseEntity expenseEntity, Expense expense) {
