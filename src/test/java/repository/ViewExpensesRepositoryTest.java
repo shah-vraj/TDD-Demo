@@ -189,6 +189,23 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
+    public void shouldReturnZeroCostWhenInvalidInputProvided() {
+        // Given
+        Month nullMonth = null;
+        int negativeYear = -2024;
+
+        // When
+        double result1 = repository.getTotalExpenseCostForMonth(nullMonth, 2024);
+        double result2 = repository.getTotalExpenseCostForMonth(Month.APRIL, negativeYear);
+        double result3 = repository.getTotalExpenseCostForMonth(nullMonth, negativeYear);
+
+        // Then
+        assertEquals(result1, 0.0);
+        assertEquals(result2, 0.0);
+        assertEquals(result3, 0.0);
+    }
+
+    @Test
     public void shouldReturnZeroCostWhenNoSpecificMonthExpenseAdded() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity3, dummyExpenseEntity5);

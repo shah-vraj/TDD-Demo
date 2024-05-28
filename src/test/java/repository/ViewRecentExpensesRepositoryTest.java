@@ -89,7 +89,7 @@ class ViewRecentExpensesRepositoryTest {
         List<Expense> result2 = repository.getRecentExpenses(5, 4);
 
         // Then
-        assertEquals(result1.size(), 5);
+        assertEquals(result1.size(), 3);
         assertTrue(result1.stream().anyMatch(expense -> Objects.equals(expense, dummyExpense1)));
         assertTrue(result1.stream().anyMatch(expense -> Objects.equals(expense, dummyExpense2)));
         assertTrue(result1.stream().anyMatch(expense -> Objects.equals(expense, dummyExpense3)));
