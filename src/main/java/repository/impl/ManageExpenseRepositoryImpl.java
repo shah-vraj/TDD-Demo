@@ -36,6 +36,11 @@ public class ManageExpenseRepositoryImpl implements ManageExpenseRepository {
         return idToRemove != -1 && databaseRepository.removeExpense(idToRemove);
     }
 
+    @Override
+    public void updateExpense(Expense oldExpense, Expense newExpense) {
+        return;
+    }
+
     /**
      * Provides ID for the new expense to be added in the database
      *
@@ -48,8 +53,8 @@ public class ManageExpenseRepositoryImpl implements ManageExpenseRepository {
         AtomicInteger newExpenseId = new AtomicInteger(-1);
         databaseRepository.getAllExpenses()
                 .stream()
-                .max(Comparator.comparingInt(ExpenseEntity::id))
-                .ifPresent(expenseEntity -> newExpenseId.set(expenseEntity.id() + 1));
+                .max(Comparator.comparingInt(ExpenseEntity::getId))
+                .ifPresent(expenseEntity -> newExpenseId.set(expenseEntity.getId() + 1));
         return newExpenseId.get() != -1 ? newExpenseId.get() : 1;
     }
 
@@ -64,7 +69,7 @@ public class ManageExpenseRepositoryImpl implements ManageExpenseRepository {
                 .stream()
                 .filter(entity -> ExpenseHelper.areTheSame(entity, expense))
                 .findFirst()
-                .map(ExpenseEntity::id)
+                .map(ExpenseEntity::getId)
                 .orElse(-1);
     }
 

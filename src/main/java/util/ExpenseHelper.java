@@ -28,8 +28,8 @@ public class ExpenseHelper {
      * @return True if both expenses have same value, otherwise False
      */
     public static boolean areTheSame(ExpenseEntity expenseEntity, Expense expense) {
-        return Objects.equals(expenseEntity.name(), expense.name()) &&
-                Double.compare(expenseEntity.cost(), expense.cost()) == 0 &&
-                Objects.equals(expenseEntity.date(), expense.date());
+        return Objects.equals(expenseEntity.getName(), expense.name()) &&
+                Double.compare(expenseEntity.getCost(), expense.cost()) == 0 &&
+                Objects.equals(expenseEntity.getDate(), expense.date());
     }
 }

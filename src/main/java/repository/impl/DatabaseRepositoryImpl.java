@@ -51,7 +51,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
     @Override
     public boolean removeExpense(int id) {
-        return allExpenses.removeIf(expenseEntity -> expenseEntity.id() == id);
+        return allExpenses.removeIf(expenseEntity -> expenseEntity.getId() == id);
+    }
+
+    @Override
+    public void updateExpense(ExpenseEntity expense) {
+        return;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class ViewExpensesRepositoryImpl implements ViewExpensesRepository {
             return List.of();
         return databaseRepository.getAllExpenses()
                 .stream()
-                .filter(expenseEntity -> areMonthAndYearSimilarToDate(expenseEntity.date(), month, year))
+                .filter(expenseEntity -> areMonthAndYearSimilarToDate(expenseEntity.getDate(), month, year))
                 .map(ExpenseEntity::toExpense)
                 .toList();
     }

@@ -28,7 +28,7 @@ public class ViewRecentExpensesRepositoryImpl implements ViewRecentExpensesRepos
 
         List<ExpenseEntity> allExpenses = databaseRepository.getAllExpenses()
                 .stream()
-                .sorted(Comparator.comparing(ExpenseEntity::date).reversed())
+                .sorted(Comparator.comparing(ExpenseEntity::getDate).reversed())
                 .toList();
 
         return offset > allExpenses.size() - 1
