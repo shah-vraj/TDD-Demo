@@ -23,6 +23,7 @@ public class SpendWiseApplication {
         switch (selectedMenuOption) {
             case AddExpense -> manageExpense.showAddExpense();
             case RemoveExpense -> manageExpense.showRemoveExpense();
+            case UpdateExpense -> manageExpense.showUpdateExpense();
             case CurrentMonthExpenses -> viewExpenses.showCurrentMonthExpenses();
             case SpecificMonthExpenses -> viewExpenses.showSpecificMonthExpenses();
             case CurrentMonthExpensesCost -> viewExpenses.showCurrentMonthExpensesCost();
@@ -39,16 +40,17 @@ public class SpendWiseApplication {
                 --------------------------------------
                 1. Add an expense
                 2. Remove an expense
-                3. Get all expenses for current month
-                4. Get all expenses for specific month
-                5. Get current month expenses cost
-                6. Get specific month expenses cost
-                7. Get recent expenses
-                8. Exit
+                3. Update an expense
+                4. Get all expenses for current month
+                5. Get all expenses for specific month
+                6. Get current month expenses cost
+                7. Get specific month expenses cost
+                8. Get recent expenses
+                9. Exit
                 --------------------------------------
                 """;
         System.out.print(menu);
-        System.out.print("Select an option between 1 and 8: ");
+        System.out.print("Select an option between 1 and 9: ");
 
         String selectedMenuOptionString = scanner.nextLine();
         if (!isValidMenuOption(selectedMenuOptionString)) {
@@ -63,7 +65,7 @@ public class SpendWiseApplication {
             return false;
         try {
             int selectedMenuOption = Integer.parseInt(selectedMenuOptionString);
-            return selectedMenuOption > 0 && selectedMenuOption <= 8;
+            return selectedMenuOption > 0 && selectedMenuOption <= 9;
         } catch (NumberFormatException e) {
             return false;
         }

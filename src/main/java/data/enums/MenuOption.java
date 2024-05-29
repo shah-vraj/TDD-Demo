@@ -6,6 +6,7 @@ package data.enums;
 public enum MenuOption {
     AddExpense,
     RemoveExpense,
+    UpdateExpense,
     CurrentMonthExpenses,
     SpecificMonthExpenses,
     CurrentMonthExpensesCost,

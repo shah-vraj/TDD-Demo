@@ -46,7 +46,7 @@ public class ManageExpense {
         // Cost
         System.out.print("Cost: ");
         String costString = scanner.nextLine();
-        if (!isValidCostProvided(costString)) {
+        if (isCostInvalid(costString)) {
             System.out.println("Failed to add expense due to invalid cost provided\n");
             return;
         }
@@ -67,7 +67,7 @@ public class ManageExpense {
         // ID to remove
         System.out.print("\nEnter the id of the expense to remove (-1 to cancel): ");
         String idStringOfExpenseToRemove = scanner.nextLine();
-        if (!isValidId(idStringOfExpenseToRemove)) {
+        if (isIdInvalid(idStringOfExpenseToRemove)) {
             System.out.println("Failed to remove expense due to invalid id provided\n");
             return;
         }
@@ -81,25 +81,62 @@ public class ManageExpense {
         System.out.println(isExpenseRemoved ? successMessage : failureMessage);
     }
 
-    private boolean isValidCostProvided(String costString) {
+    public void showUpdateExpense() {
+        recentExpenses = viewRecentExpensesRepository.getRecentExpenses(VIEW_RECENT_EXPENSES_LIMIT, offset);
+        printLoadedRecentExpenses();
+        checkIfMoreRecentExpensesAreAvailable();
+
+        // ID to update
+        System.out.print("\nEnter the id of the expense to update (-1 to cancel): ");
+        String idStringOfExpenseToUpdate = scanner.nextLine();
+        if (isIdInvalid(idStringOfExpenseToUpdate)) {
+            System.out.println("Failed to update expense due to invalid id provided\n");
+            return;
+        }
+
+        // Name
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        if (name == null || name.isBlank()) {
+            System.out.println("Failed to update expense due to invalid name provided\n");
+            return;
+        }
+
+        // Cost
+        System.out.print("Cost: ");
+        String costString = scanner.nextLine();
+        if (isCostInvalid(costString)) {
+            System.out.println("Failed to update expense due to invalid cost provided\n");
+            return;
+        }
+
+        // Update expense
+        int indexOfExpenseToUpdate = Integer.parseInt(idStringOfExpenseToUpdate) - 1;
+        Expense oldExpense = recentExpenses.get(indexOfExpenseToUpdate);
+        Expense newExpense = new Expense(name, Double.parseDouble(costString), oldExpense.date());
+        manageExpenseRepository.updateExpense(oldExpense, newExpense);
+        System.out.println("Expense updated successfully\n");
+    }
+
+    private boolean isCostInvalid(String costString) {
         if (costString == null || costString.isBlank())
-            return false;
+            return true;
         try {
             double cost = Double.parseDouble(costString);
-            return cost >= 0;
+            return cost < 0;
         } catch (NumberFormatException e) {
-            return false;
+            return true;
         }
     }
 
-    private boolean isValidId(String idString) {
+    private boolean isIdInvalid(String idString) {
         if (idString == null || idString.isBlank())
-            return false;
+            return true;
         try {
             double id = Integer.parseInt(idString);
-            return id > 0 && id <= recentExpenses.size();
+            return id <= 0 || id > recentExpenses.size();
         } catch (NumberFormatException e) {
-            return false;
+            return true;
         }
     }
 

@@ -56,7 +56,13 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
     @Override
     public void updateExpense(ExpenseEntity expense) {
-        return;
+        allExpenses.stream()
+                .filter(expenseEntity -> expenseEntity.getId() == expense.getId())
+                .findFirst()
+                .ifPresent(expenseEntity -> {
+                    expenseEntity.setName(expense.getName());
+                    expenseEntity.setCost(expense.getCost());
+                });
     }
 
     @Override

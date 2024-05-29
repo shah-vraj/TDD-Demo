@@ -38,7 +38,10 @@ public class ManageExpenseRepositoryImpl implements ManageExpenseRepository {
 
     @Override
     public void updateExpense(Expense oldExpense, Expense newExpense) {
-        return;
+        if (isExpenseInvalid(oldExpense) || isExpenseInvalid(newExpense))
+            return;
+        int idToUpdate = getIdForExpense(oldExpense);
+        databaseRepository.updateExpense(ExpenseHelper.getExpenseEntityFromExpense(newExpense, idToUpdate));
     }
 
     /**
