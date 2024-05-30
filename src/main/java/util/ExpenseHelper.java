@@ -1,7 +1,7 @@
 package util;
 
 import data.entity.ExpenseEntity;
-import data.model.Expense;
+import model.Expense;
 
 import java.util.Objects;
 

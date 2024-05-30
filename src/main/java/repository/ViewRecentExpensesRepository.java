@@ -1,6 +1,6 @@
 package repository;
 
-import data.model.Expense;
+import model.Expense;
 
 import java.util.List;
 

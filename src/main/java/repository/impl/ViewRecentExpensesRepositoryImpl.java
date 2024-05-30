@@ -1,7 +1,7 @@
 package repository.impl;
 
 import data.entity.ExpenseEntity;
-import data.model.Expense;
+import model.Expense;
 import repository.DatabaseRepository;
 import repository.ViewRecentExpensesRepository;
 

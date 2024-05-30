@@ -1,6 +1,6 @@
 package data.entity;
 
-import data.model.Expense;
+import model.Expense;
 
 import java.time.LocalDate;
 

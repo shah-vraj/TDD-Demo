@@ -1,7 +1,7 @@
 package repository;
 
 import data.entity.ExpenseEntity;
-import data.model.Expense;
+import model.Expense;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -129,7 +129,7 @@ class ManageExpenseRepositoryTest {
         boolean isExpenseRemoved4 = repository.removeExpense(nullDateExpense);
 
         // Then
-        verify(databaseRepository, never()).addExpense(any());
+        verify(databaseRepository, never()).removeExpense(1);
 
         assertFalse(isExpenseRemoved1);
         assertFalse(isExpenseRemoved2);

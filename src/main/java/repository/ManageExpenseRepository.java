@@ -1,6 +1,6 @@
 package repository;
 
-import data.model.Expense;
+import model.Expense;
 
 /**
  * Repository for managing expense that deals with all operations related to ManageExpense screen.

@@ -1,6 +1,6 @@
 package ui;
 
-import data.model.Expense;
+import model.Expense;
 import repository.DatabaseRepository;
 import repository.ViewExpensesRepository;
 import repository.impl.ViewExpensesRepositoryImpl;
