@@ -18,7 +18,7 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ViewExpensesRepositoryTest {
@@ -45,8 +45,9 @@ class ViewExpensesRepositoryTest {
         repository = new ViewExpensesRepositoryImpl(databaseRepository);
     }
 
+    // Region: Current month expenses
     @Test
-    public void shouldReturnEmptyListWhenNoExpensesAdded() {
+    public void shouldReturnEmptyList_When_NoExpensesAdded_And_GetCurrentMonthExpensesIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = Collections.emptyList();
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
@@ -59,7 +60,7 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnEmptyListWhenAllExpensesAreOtherThanCurrentMonth() {
+    public void shouldReturnEmptyList_When_NoCurrentMonthExpenseAdded_And_GetCurrentMonthExpensesIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity3, dummyExpenseEntity5);
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
@@ -72,7 +73,7 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnAllExpensesWhenAllExpensesAreOfCurrentMonth() {
+    public void shouldReturnAllExpenses_When_AllExpensesAreOfCurrentMonth_And_GetCurrentMonthExpensesIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity4);
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
@@ -88,7 +89,7 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnAllCurrentMonthExpensesWhenMultipleDifferentDateAddedExpensesArePresent() {
+    public void shouldReturnAllCurrentMonthExpenses_When_MultipleExpensesArePresent_And_GetCurrentMonthExpensesIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(
                 dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3, dummyExpenseEntity4, dummyExpenseEntity5
@@ -110,9 +111,11 @@ class ViewExpensesRepositoryTest {
         assertTrue(result.stream().noneMatch(expense -> Objects.equals(expense, dummyExpense3)));
         assertTrue(result.stream().noneMatch(expense -> Objects.equals(expense, dummyExpense5)));
     }
+    // End region
 
+    // Region: Specific month expenses
     @Test
-    public void shouldReturnEmptyListWhenInvalidInputProvided() {
+    public void shouldReturnEmptyList_When_InvalidInputProvided_And_GetExpensesForMonthIsCalled() {
         // Given
         Month invalidMonth = null;
         int invalidYear = -2021;
@@ -123,13 +126,15 @@ class ViewExpensesRepositoryTest {
         List<Expense> result3 = repository.getExpensesForMonth(invalidMonth, invalidYear);
 
         // Then
+        verify(databaseRepository, never()).getAllExpenses();
+
         assertTrue(result1.isEmpty());
         assertTrue(result2.isEmpty());
         assertTrue(result3.isEmpty());
     }
 
     @Test
-    public void shouldReturnEmptyListWhenNoExpenseAddedForSpecificMonth() {
+    public void shouldReturnEmptyList_When_NoSpecificMonthExpenseAdded_And_GetExpensesForMonthIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3);
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
@@ -142,7 +147,7 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnSpecificMonthExpensesWhenThereIsAtLeastOneExpenseAddedForThatMonth() {
+    public void shouldReturnSpecificMonthExpenses_When_SpecificMonthExpenseAdded_And_GetExpensesForMonthIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(
                 dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3, dummyExpenseEntity4
@@ -161,9 +166,11 @@ class ViewExpensesRepositoryTest {
 
         assertTrue(result.stream().noneMatch(expense -> Objects.equals(expense, dummyExpense3)));
     }
+    // End region
 
+    // Region: Total expense cost for current month
     @Test
-    public void shouldReturnZeroCostWhenNoCurrentMonthExpenseAdded() {
+    public void shouldReturnZeroCost_When_NoCurrentMonthExpenseAdded_And_GetTotalExpenseCostForCurrentMonthIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity3, dummyExpenseEntity5);
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
@@ -176,10 +183,10 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnProperCostWhenCurrentMonthExpenseArePresent() {
+    public void shouldReturnProperCost_When_CurrentMonthExpenseAdded_And_GetTotalExpenseCostForCurrentMonthIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3);
-        double expectedCost = 3.46;
+        double expectedCost = dummyExpense1.cost() + dummyExpense2.cost();
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
 
         // When
@@ -188,9 +195,11 @@ class ViewExpensesRepositoryTest {
         // Then
         assertEquals(result, expectedCost);
     }
+    // End region
 
+    // Region: Total expense cost for specific month
     @Test
-    public void shouldReturnZeroCostWhenInvalidInputProvided() {
+    public void shouldReturnZeroCost_When_InvalidInputProvided_And_GetTotalExpenseCostForMonthIsCalled() {
         // Given
         Month nullMonth = null;
         int negativeYear = -2024;
@@ -207,7 +216,7 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnZeroCostWhenNoSpecificMonthExpenseAdded() {
+    public void shouldReturnZeroCost_When_NoSpecificMonthExpenseAdded_And_GetTotalExpenseCostForMonthIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity3, dummyExpenseEntity5);
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
@@ -220,7 +229,7 @@ class ViewExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnProperCostWhenSpecificMonthExpenseArePresent() {
+    public void shouldReturnProperCost_When_SpecificMonthExpenseAdded_And_GetTotalExpenseCostForMonthIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity3, dummyExpenseEntity4, dummyExpenseEntity5);
         double expectedCost = 5.23;

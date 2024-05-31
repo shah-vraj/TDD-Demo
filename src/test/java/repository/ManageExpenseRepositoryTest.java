@@ -49,8 +49,9 @@ class ManageExpenseRepositoryTest {
         repository = new ManageExpenseRepositoryImpl(databaseRepository);
     }
 
+    // Region: Add Expense
     @Test
-    public void shouldNotAddExpenseWhenNullExpenseProvided() {
+    public void shouldNotAddExpense_When_NullExpenseProvided_And_AddExpenseIsCalled() {
         // Given
         Expense expenseToAdd = null;
 
@@ -64,35 +65,7 @@ class ManageExpenseRepositoryTest {
     }
 
     @Test
-    public void shouldNotRemoveExpenseWhenNullExpenseProvided() {
-        // Given
-        Expense expenseToRemove = null;
-
-        // When
-        boolean isExpenseAdded = repository.removeExpense(expenseToRemove);
-
-        // Then
-        verify(databaseRepository, never()).addExpense(any());
-
-        assertFalse(isExpenseAdded);
-    }
-
-    @Test
-    public void shouldNotUpdateExpenseWhenNullExpenseProvided() {
-        // Given
-        Expense nullExpense = null;
-
-        // When
-        repository.updateExpense(nullExpense, dummyExpense1);
-        repository.updateExpense(dummyExpense1, nullExpense);
-        repository.updateExpense(nullExpense, nullExpense);
-
-        // Then
-        verify(databaseRepository, never()).addExpense(any());
-    }
-
-    @Test
-    public void shouldNotAddExpenseWhenInvalidExpenseProvided() {
+    public void shouldNotAddExpense_When_InvalidExpenseProvided_And_AddExpenseIsCalled() {
         // Given
         Expense nullNameExpense = new Expense(null, 1.0, LocalDate.now());
         Expense blankNameExpense = new Expense(" ", 1.0, LocalDate.now());
@@ -115,59 +88,7 @@ class ManageExpenseRepositoryTest {
     }
 
     @Test
-    public void shouldNotRemoveExpenseWhenInvalidExpenseProvided() {
-        // Given
-        Expense nullNameExpense = new Expense(null, 1.0, LocalDate.now());
-        Expense blankNameExpense = new Expense(" ", 1.0, LocalDate.now());
-        Expense negativeCostExpense = new Expense("Milk", -10.0, LocalDate.now());
-        Expense nullDateExpense = new Expense("Milk", 1.0, null);
-
-        // When
-        boolean isExpenseRemoved1 = repository.removeExpense(nullNameExpense);
-        boolean isExpenseRemoved2 = repository.removeExpense(blankNameExpense);
-        boolean isExpenseRemoved3 = repository.removeExpense(negativeCostExpense);
-        boolean isExpenseRemoved4 = repository.removeExpense(nullDateExpense);
-
-        // Then
-        verify(databaseRepository, never()).removeExpense(1);
-
-        assertFalse(isExpenseRemoved1);
-        assertFalse(isExpenseRemoved2);
-        assertFalse(isExpenseRemoved3);
-        assertFalse(isExpenseRemoved4);
-    }
-
-    @Test
-    public void shouldNotUpdateExpenseWhenInvalidExpenseProvided() {
-        // Given
-        Expense nullNameExpense = new Expense(null, 1.0, LocalDate.now());
-        Expense blankNameExpense = new Expense(" ", 1.0, LocalDate.now());
-        Expense negativeCostExpense = new Expense("Milk", -10.0, LocalDate.now());
-        Expense nullDateExpense = new Expense("Milk", 1.0, null);
-
-        // When
-        repository.updateExpense(nullNameExpense, dummyExpense1);
-        repository.updateExpense(dummyExpense1, nullNameExpense);
-        repository.updateExpense(nullNameExpense, nullNameExpense);
-
-        repository.updateExpense(blankNameExpense, dummyExpense1);
-        repository.updateExpense(dummyExpense1, blankNameExpense);
-        repository.updateExpense(blankNameExpense, blankNameExpense);
-
-        repository.updateExpense(negativeCostExpense, dummyExpense1);
-        repository.updateExpense(dummyExpense1, negativeCostExpense);
-        repository.updateExpense(negativeCostExpense, negativeCostExpense);
-
-        repository.updateExpense(nullDateExpense, dummyExpense1);
-        repository.updateExpense(dummyExpense1, nullDateExpense);
-        repository.updateExpense(nullDateExpense, nullDateExpense);
-
-        // Then
-        verify(databaseRepository, never()).addExpense(any());
-    }
-
-    @Test
-    public void shouldAddExpenseWhenValidExpenseProvided() {
+    public void shouldAddExpense_When_ValidExpenseProvided_And_AddExpenseIsCalled() {
         // Given
         Expense expense = new Expense("Milk", 7.23, LocalDate.now());
         ArgumentCaptor<ExpenseEntity> expenseEntityArgumentCaptor = ArgumentCaptor.forClass(ExpenseEntity.class);
@@ -183,7 +104,7 @@ class ManageExpenseRepositoryTest {
     }
 
     @Test
-    public void shouldAddExpenseWhenMultipleSimilarExpensesProvided() {
+    public void shouldAddExpense_When_MultipleSimilarExpensesProvided_And_AddExpenseIsCalled() {
         // Given
         Expense expense1 = new Expense("Milk", 7.23, LocalDate.now());
         Expense expense2 = new Expense("Milk", 7.23, LocalDate.now());
@@ -215,9 +136,48 @@ class ManageExpenseRepositoryTest {
         assertTrue(ExpenseHelper.areTheSame(expenseEntityArgumentCaptor.getValue(), expense4));
         assertTrue(isExpenseAdded);
     }
+    // End region
+
+    // Region: Remove expense
+    @Test
+    public void shouldNotRemoveExpense_When_NullExpenseProvided_And_RemoveExpenseIsCalled() {
+        // Given
+        Expense expenseToRemove = null;
+
+        // When
+        boolean isExpenseAdded = repository.removeExpense(expenseToRemove);
+
+        // Then
+        verify(databaseRepository, never()).removeExpense(1);
+
+        assertFalse(isExpenseAdded);
+    }
 
     @Test
-    public void shouldReturnFalseWhenRemoveExpenseCalledAndIdIsNotPresent() {
+    public void shouldNotRemoveExpense_When_InvalidExpenseProvided_And_RemoveExpenseIsCalled() {
+        // Given
+        Expense nullNameExpense = new Expense(null, 1.0, LocalDate.now());
+        Expense blankNameExpense = new Expense(" ", 1.0, LocalDate.now());
+        Expense negativeCostExpense = new Expense("Milk", -10.0, LocalDate.now());
+        Expense nullDateExpense = new Expense("Milk", 1.0, null);
+
+        // When
+        boolean isExpenseRemoved1 = repository.removeExpense(nullNameExpense);
+        boolean isExpenseRemoved2 = repository.removeExpense(blankNameExpense);
+        boolean isExpenseRemoved3 = repository.removeExpense(negativeCostExpense);
+        boolean isExpenseRemoved4 = repository.removeExpense(nullDateExpense);
+
+        // Then
+        verify(databaseRepository, never()).removeExpense(1);
+
+        assertFalse(isExpenseRemoved1);
+        assertFalse(isExpenseRemoved2);
+        assertFalse(isExpenseRemoved3);
+        assertFalse(isExpenseRemoved4);
+    }
+
+    @Test
+    public void shouldReturnFalse_When_IdIsNotPresent_And_RemoveExpenseIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(
                 dummyExpenseEntity1,
@@ -238,7 +198,7 @@ class ManageExpenseRepositoryTest {
     }
 
     @Test
-    public void shouldReturnTrueWhenRemoveExpenseCalledAndIdIsPresent() {
+    public void shouldReturnTrue_When_IdIsPresent_And_RemoveExpenseIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3);
         ArgumentCaptor<Integer> expenseIdArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -253,9 +213,54 @@ class ManageExpenseRepositoryTest {
         assertEquals(expenseIdArgumentCaptor.getValue(), dummyExpenseEntity2.getId());
         assertTrue(isExpenseRemoved);
     }
+    // End region
+
+    // Region: Update expense
+    @Test
+    public void shouldNotUpdateExpense_When_NullExpenseProvided_And_UpdateExpenseIsCalled() {
+        // Given
+        Expense nullExpense = null;
+
+        // When
+        repository.updateExpense(nullExpense, dummyExpense1);
+        repository.updateExpense(dummyExpense1, nullExpense);
+        repository.updateExpense(nullExpense, nullExpense);
+
+        // Then
+        verify(databaseRepository, never()).updateExpense(any());
+    }
 
     @Test
-    public void shouldUpdateExpenseWhenValidExpensesProvided() {
+    public void shouldNotUpdateExpense_When_InvalidExpenseProvided_And_UpdateExpenseIsCalled() {
+        // Given
+        Expense nullNameExpense = new Expense(null, 1.0, LocalDate.now());
+        Expense blankNameExpense = new Expense(" ", 1.0, LocalDate.now());
+        Expense negativeCostExpense = new Expense("Milk", -10.0, LocalDate.now());
+        Expense nullDateExpense = new Expense("Milk", 1.0, null);
+
+        // When
+        repository.updateExpense(nullNameExpense, dummyExpense1);
+        repository.updateExpense(dummyExpense1, nullNameExpense);
+        repository.updateExpense(nullNameExpense, nullNameExpense);
+
+        repository.updateExpense(blankNameExpense, dummyExpense1);
+        repository.updateExpense(dummyExpense1, blankNameExpense);
+        repository.updateExpense(blankNameExpense, blankNameExpense);
+
+        repository.updateExpense(negativeCostExpense, dummyExpense1);
+        repository.updateExpense(dummyExpense1, negativeCostExpense);
+        repository.updateExpense(negativeCostExpense, negativeCostExpense);
+
+        repository.updateExpense(nullDateExpense, dummyExpense1);
+        repository.updateExpense(dummyExpense1, nullDateExpense);
+        repository.updateExpense(nullDateExpense, nullDateExpense);
+
+        // Then
+        verify(databaseRepository, never()).updateExpense(any());
+    }
+
+    @Test
+    public void shouldUpdateExpense_When_ValidExpensesProvided_And_UpdateExpenseIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3);
         ArgumentCaptor<ExpenseEntity> expenseEntityArgumentCaptor = ArgumentCaptor.forClass(ExpenseEntity.class);
@@ -268,8 +273,7 @@ class ManageExpenseRepositoryTest {
         verify(databaseRepository).updateExpense(expenseEntityArgumentCaptor.capture());
         ExpenseEntity capturedEntity = expenseEntityArgumentCaptor.getValue();
         assertEquals(capturedEntity.getId(), 2);
-        assertEquals(capturedEntity.getName(), dummyExpense2updated.name());
-        assertEquals(capturedEntity.getCost(), dummyExpense2updated.cost());
-        assertEquals(capturedEntity.getDate(), dummyExpense2updated.date());
+        assertTrue(ExpenseHelper.areTheSame(capturedEntity, dummyExpense2updated));
     }
+    // End region
 }

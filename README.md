@@ -32,10 +32,13 @@ SpendWise is an JAVA base CLI application which is used to keep track of expense
 ## Test coverage report
 All the business logic classes are covered and highlighted in the screenshot: [IntelliJ Code Coverage Screenshot][TestCoverageScreenshot]
 
-| Exception          | Reason                                                     |
-|:-------------------|:-----------------------------------------------------------|
-| DatabaseRepository | Is always mocked as it deals with database CRUD operations |
-| UI Package         | On purpose no test cases written for CLI                   |
+| Exception               | Reason                                                                                                             |
+|:------------------------|:-------------------------------------------------------------------------------------------------------------------|
+| ExpenseEntity           | Data level model class which contains getter, setter and equals method accessed inside DatabaseRepository(mocked). |
+| MenuOption              | UI level enum class to handle user input.                                                                          |
+| DatabaseRepository/Impl | Is always mocked as it deals with database CRUD operations                                                         |
+| UI Package              | On purpose no test cases written for CLI                                                                           |
+| SpendWiseApplication    | Part of UI - Application entry point                                                                               |
 
 ## Thanks
 > Any fool can write code that a computer can understand. Good programmers write code that humans can understand.<br> - Martin Fowler

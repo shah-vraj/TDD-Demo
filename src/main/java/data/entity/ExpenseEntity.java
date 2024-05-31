@@ -3,6 +3,7 @@ package data.entity;
 import model.Expense;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Entity class of Expense that is added to the database
@@ -57,5 +58,13 @@ public final class ExpenseEntity {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExpenseEntity that = (ExpenseEntity) o;
+        return id == that.id && Double.compare(cost, that.cost) == 0 && Objects.equals(name, that.name) && Objects.equals(date, that.date);
     }
 }

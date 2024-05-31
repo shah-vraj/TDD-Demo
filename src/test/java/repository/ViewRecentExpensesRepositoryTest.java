@@ -45,7 +45,7 @@ class ViewRecentExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnEmptyListWhenInvalidInputProvided() {
+    public void shouldReturnEmptyList_When_InvalidInputProvided_And_GetRecentExpensesIsCalled() {
         // Given
         int invalidLimit = -10;
         int invalidOffset = -2;
@@ -62,7 +62,7 @@ class ViewRecentExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnProperExpensesWhenLimitAndOffsetAreInRangeOfAllExpenses() {
+    public void shouldReturnExpenses_When_LimitAndOffsetAreInRangeOfAllExpenses_And_GetRecentExpensesIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(
                 dummyExpenseEntity1, dummyExpenseEntity4, dummyExpenseEntity3, dummyExpenseEntity5, dummyExpenseEntity2
@@ -79,7 +79,7 @@ class ViewRecentExpensesRepositoryTest {
     }
 
     @Test
-    public void shouldReturnProperExpensesWhenLimitAndOffsetAreOutOfRangeOfAllExpenses() {
+    public void shouldReturnExpenses_When_LimitAndOffsetAreOutOfRangeOfAllExpenses_And_GetRecentExpensesIsCalled() {
         // Given
         List<ExpenseEntity> allExpenses = List.of(dummyExpenseEntity1, dummyExpenseEntity2, dummyExpenseEntity3);
         when(databaseRepository.getAllExpenses()).thenReturn(allExpenses);
